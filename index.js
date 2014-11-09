@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var Ghost, Ping, SiteMap, colors, commands, fs, generate, init, initSiteMap, jf, logSymbols, messages, mkdirp, nut, ping, pluralize, _;
 
 SiteMap = require('./lib/sitemap');

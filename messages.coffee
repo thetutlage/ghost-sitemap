@@ -13,5 +13,8 @@ Messages =
   not_inside_root: "You are not inside the root directory of ghost"
   not_writable: "Unable to create sitemapfile.json"
   writable: "sitemapfile.json created with following config"
+  pinging: "Submitting sitemaps to <%= service %>..."
+  ping_success: "Submitted <%= file %> to <%= service %>"
+  ping_error: "Error submitting <%= file %> to <%= service %> with <%= status_code %> status code"
 
 module.exports = Messages

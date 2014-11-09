@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var Ghost, Ping, SiteMap, colors, commands, fs, generate, init, initSiteMap, jf, logSymbols, messages, mkdirp, nut, ping, pluralize, _;
 
 SiteMap = require('./lib/sitemap');
@@ -219,7 +220,6 @@ if (commands.init) {
     } else {
       mkdirp.sync(obj.output_dir);
       initGhostConfig = new Ghost(obj);
-      generate(initGhostConfig);
       if (commands.generate) {
         generate(initGhostConfig);
       }

@@ -140,7 +140,6 @@ else #if _.size(commands) > 0
     else
       mkdirp.sync obj.output_dir
       initGhostConfig = new Ghost obj
-      generate(initGhostConfig)
 
       if commands.generate
         generate(initGhostConfig)

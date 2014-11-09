@@ -6,13 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository" :{
-    "type" : "git",
-    "url" : "http://github.com/thetutlage/ghost-sitemap.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/thetutlage/ghost-sitemap.git"
   },
   "author": "amanvirk <virk.officials@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "async": "^0.9.0",
     "colors": "^1.0.3",
     "jsonfile": "^2.0.0",
     "knex": "^0.7.3",
@@ -24,6 +25,7 @@
     "pg": "^3.6.2",
     "pluralize": "^1.0.3",
     "q": "^1.0.1",
+    "request": "^2.47.0",
     "sitemap": "^0.7.4",
     "sqlite3": "^3.0.2"
   },

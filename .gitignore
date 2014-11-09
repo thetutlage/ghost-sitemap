@@ -1,5 +1,1 @@
-**/*.coffee
 node_modules
-index.coffee
-messages.coffee
-gulpfile.js

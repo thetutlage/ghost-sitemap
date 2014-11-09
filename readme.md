@@ -62,3 +62,29 @@ it will ping google , bing or both depending upon arguments based.
 #### Ping Google and Bing
 
 ![ping](http://i1117.photobucket.com/albums/k594/thetutlage/ScreenShot2014-11-09at111919pm_zpsbd11ad1c.png)
+
+
+### Configuring ghost to serve sitemaps
+
+By default ghost does not serve static files apart from one defined by ghost itself, which means your created sitemaps will not
+be access by anyone as the directory they are save in is not public.
+
+
+By making a minor change you can make it possible.
+
+* Open **core/server/middleware/index.js**
+* Scroll till you find below section
+
+  ```javascript
+      // Static assets
+    blogApp.use('/shared', express['static'](path.join(corePath, '/shared'), {maxAge: utils.ONE_HOUR_MS}));
+    blogApp.use('/content/images', storage.getStorage().serve());
+    blogApp.use('/ghost/scripts', express['static'](path.join(corePath, '/built/scripts'), {maxAge: utils.ONE_YEAR_MS}));
+    blogApp.use('/public', express['static'](path.join(corePath, '/built/public'), {maxAge: utils.ONE_YEAR_MS}));
+    ```
+* And below line after the above code
+  ```javascript
+      blogApp.use('/sitemap', express['static'](path.join(corePath, '../sitemap'), {maxAge: utils.ONE_HOUR_MS}));
+  ```
+
+  Make sure to change **/sitemap** to the directory path inside your **sitemapfile.json** file, **/sitemap** is the default path if you have not played with your config file.

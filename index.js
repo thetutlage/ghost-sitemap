@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var Ghost, Ping, SiteMap, colors, commands, fs, generate, init, initSiteMap, jf, logSymbols, messages, mkdirp, nut, ping, pluralize, _;
 
 SiteMap = require('./lib/sitemap');
@@ -82,7 +80,9 @@ generate = function(initGhostConfig) {
     console.log(colors.cyan(_.template(messages.fetching, {
       type: 'posts'
     })));
-    return initSiteMap.getPosts();
+    return initSiteMap.getPermalink();
+  }).then(function(permalink) {
+    return initSiteMap.getPosts(permalink);
   }).then(function(posts) {
     var counts;
     counts = _.size(posts);
@@ -211,27 +211,28 @@ ping = function(initGhostConfig, service) {
 
 if (commands.init) {
   init();
-}
-
-jf.readFile('sitemapfile.json', function(err, obj) {
-  var initGhostConfig, ping_to;
-  if (err) {
-    console.log(colors.red(logSymbols.error, messages.config_not_found));
-  } else {
-    mkdirp.sync(obj.output_dir);
-    initGhostConfig = new Ghost(obj);
-    if (commands.generate) {
+} else {
+  jf.readFile('sitemapfile.json', function(err, obj) {
+    var initGhostConfig, ping_to;
+    if (err) {
+      console.log(colors.red(logSymbols.error, messages.config_not_found));
+    } else {
+      mkdirp.sync(obj.output_dir);
+      initGhostConfig = new Ghost(obj);
       generate(initGhostConfig);
-    }
-    if (commands.ping) {
-      if (commands.ping === 'all') {
-        ping_to = ['google', 'bing'];
-      } else {
-        ping_to = commands.ping.split(',');
+      if (commands.generate) {
+        generate(initGhostConfig);
       }
-      return _.each(ping_to, function(to) {
-        return ping(initGhostConfig, to);
-      });
+      if (commands.ping) {
+        if (commands.ping === 'all') {
+          ping_to = ['google', 'bing'];
+        } else {
+          ping_to = commands.ping.split(',');
+        }
+        return _.each(ping_to, function(to) {
+          return ping(initGhostConfig, to);
+        });
+      }
     }
-  }
-});
+  });
+}

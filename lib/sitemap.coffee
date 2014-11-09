@@ -11,7 +11,20 @@ class SiteMap
     @baseUrl = @config.url
     knex = knex(connection)
 
-  getPosts: ->
+  getPermalink: ->
+    defer = q.defer()
+    knex .select('value').from('settings').where () ->
+      @.where('key','permalinks')
+      return
+    .then (permalink) ->
+      defer.resolve permalink
+      return
+    .catch (err) ->
+      defer.reject err
+      return
+    defer.promise
+
+  getPosts: (permalink) ->
     defer = q.defer()
     error =
       error: 'No posts found'
@@ -19,6 +32,24 @@ class SiteMap
       @.where('status','published').where 'page',0
       return
     .then (posts) ->
+      filtered_posts = _.map posts,(item) ->
+        date = new Date item.published_at
+        year = date.getFullYear()
+        month = date.getMonth()
+        day = date.getDay()
+
+        mapObj =
+          '/:year':year
+          '/:month':month
+          '/:day':day
+          '/:slug/':item.slug
+
+        re = new RegExp(Object.keys(mapObj).join("|"),"gi")
+        slug_to_return = permalink[0].value.replace re,(matched) ->
+          "#{mapObj[matched.toLowerCase()]}/"
+        if slug_to_return.substr(-1) is '/' then item.slug = slug_to_return.substr(0, slug_to_return.length - 1) else item.slug = slug_to_return
+        return
+
       if posts then defer.resolve posts else defer.reject error
       return
     .catch (err) ->
@@ -104,7 +135,8 @@ class SiteMap
       if files
         urls = []
         for file in files
-          urls.push({url:"/#{dir}/#{file}",changefreq:'monthly',priority:'0.7'})
+          if file isnt 'sitemap.xml'
+            urls.push({url:"/#{dir}/#{file}",changefreq:'monthly',priority:'0.7'})
         sitemap = sm.createSitemap
           hostname: baseUrl
           cacheTime: 600000

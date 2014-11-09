@@ -52,7 +52,7 @@ config = {
         database: {
             client: 'sqlite3',
             connection: {
-                filename: path.join(__dirname, '/content/data/ghost-dev.db')
+                filename: path.join(__dirname, '../amanvirk.name/content/data/ghost-dev.db')
             },
             debug: false
         },

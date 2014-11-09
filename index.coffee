@@ -56,7 +56,9 @@ generate = (initGhostConfig) ->
     console.log colors.cyan messages.init
     initSiteMap = new SiteMap configration
     console.log colors.cyan _.template(messages.fetching,{type:'posts'})
-    initSiteMap.getPosts()
+    initSiteMap.getPermalink()
+  .then (permalink) ->
+    initSiteMap.getPosts(permalink)
   .then (posts) ->
     counts = _.size posts
     if counts > 0
@@ -130,22 +132,23 @@ ping = (initGhostConfig,service) ->
 
 if commands.init
   init()
-
-jf.readFile 'sitemapfile.json', (err,obj) ->
-  if err
-    console.log colors.red logSymbols.error,messages.config_not_found
-    return
-  else
-    mkdirp.sync obj.output_dir
-    initGhostConfig = new Ghost obj
-
-    if commands.generate
+else #if _.size(commands) > 0
+  jf.readFile 'sitemapfile.json', (err,obj) ->
+    if err
+      console.log colors.red logSymbols.error,messages.config_not_found
+      return
+    else
+      mkdirp.sync obj.output_dir
+      initGhostConfig = new Ghost obj
       generate(initGhostConfig)
 
-    if commands.ping
-      if commands.ping is 'all'
-        ping_to = ['google','bing']
-      else
-        ping_to = commands.ping.split ','
-      _.each ping_to, (to) ->
-        ping(initGhostConfig,to)
+      if commands.generate
+        generate(initGhostConfig)
+
+      if commands.ping
+        if commands.ping is 'all'
+          ping_to = ['google','bing']
+        else
+          ping_to = commands.ping.split ','
+        _.each ping_to, (to) ->
+          ping(initGhostConfig,to)

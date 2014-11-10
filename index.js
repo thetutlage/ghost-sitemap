@@ -103,13 +103,13 @@ generate = function(initGhostConfig) {
     if (postsXml !== "bypass") {
       console.log(colors.cyan(_.template(messages.writing, {
         type: 'posts',
-        file: 'posts.xml'
+        file: 'gposts.xml'
       })));
     }
-    return initSiteMap.xmlToFile(postsXml, 'posts.xml');
+    return initSiteMap.xmlToFile(postsXml, 'gposts.xml');
   }).then(function() {
     console.log(colors.green(logSymbols.success, _.template(messages.written, {
-      file: 'posts.xml'
+      file: 'gposts.xml'
     })));
     console.log(colors.cyan(_.template(messages.fetching, {
       type: 'tags'
@@ -133,13 +133,13 @@ generate = function(initGhostConfig) {
     if (tagsXml !== "bypass") {
       console.log(colors.cyan(_.template(messages.writing, {
         type: 'tags',
-        file: 'tags.xml'
+        file: 'gtags.xml'
       })));
     }
-    return initSiteMap.xmlToFile(tagsXml, 'tags.xml');
+    return initSiteMap.xmlToFile(tagsXml, 'gtags.xml');
   }).then(function() {
     console.log(colors.green(logSymbols.success, _.template(messages.written, {
-      file: 'tags.xml'
+      file: 'gtags.xml'
     })));
     console.log(colors.cyan(_.template(messages.fetching, {
       type: 'pages'
@@ -163,10 +163,10 @@ generate = function(initGhostConfig) {
     if (pagesXml !== "bypass") {
       console.log(colors.cyan(_.template(messages.writing, {
         type: 'pages',
-        file: 'pages.xml'
+        file: 'gpages.xml'
       })));
     }
-    return initSiteMap.xmlToFile(pagesXml, 'pages.xml');
+    return initSiteMap.xmlToFile(pagesXml, 'gpages.xml');
   }).then(function() {
     console.log(colors.cyan(messages.building));
     return initSiteMap.finalSiteMap();

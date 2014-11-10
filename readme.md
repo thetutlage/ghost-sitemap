@@ -6,6 +6,13 @@ I setup a ghost blog and realised there is no easy way to generate and publish s
 
 Ideally it shouldn't be that hard to generate one as ghost is minmal and focused blogging platform so i wrote one.
 
+
+### Installation
+
+```
+  npm install -g ghost-sitemap
+```
+
 ### Database supported
 
 All db supported by ghost

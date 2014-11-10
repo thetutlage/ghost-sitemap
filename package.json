@@ -1,7 +1,7 @@
 {
   "name": "ghost-sitemap",
-  "version": "0.0.0",
-  "description": "Easy to use sitemap generator for ghost",
+  "version": "0.0.1",
+  "description": "Frustation free sitemap generator for ghost",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
